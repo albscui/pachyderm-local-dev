@@ -1,0 +1,43 @@
+deployTarget: LOCAL
+
+global:
+  securityContexts:
+    enabled: true
+  postgresql:
+    postgresqlPassword: "pachyderm"
+    postgresqlPostgresPassword: "pachyderm"
+
+pachd:
+  image:
+    tag: local
+  clusterDeploymentID: dev
+  logFormat: json
+  enterpriseLicenseKey: "redacted"
+  rootToken: "fa03ee2e5be041aba4a7b5e4ed3db814"
+  activateAuth: true
+  localhostIssuer: "true"
+  storage:
+    backend: MINIO
+    minio:
+      bucket: "pachyderm-test"
+      endpoint: "minio.default.svc.cluster.local:9000"
+      id: "minioadmin"
+      secret: "minioadmin"
+      secure: "false"
+      signature: ""
+
+console:
+  enabled: true
+
+postgresql:
+  enabled: true
+  service:
+    type: NodePort
+
+proxy:
+  enabled: true
+  host: 172.30.80.1
+  service:
+    type: NodePort
+  tls:
+    enabled: false
