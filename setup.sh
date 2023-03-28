@@ -64,44 +64,8 @@ EOF
 # Apply minio
 kubectl apply -f etc/testing/minio.yaml --namespace=default
 
-# coredns ConfigMap
-# cat <<EOF | kubectl apply -f -
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#     name: coredns
-#     namespace: kube-system
-# data:
-#     Corefile: |
-#         .:53 {
-#             errors
-#             health {
-#                lameduck 5s
-#             }
-#             ready
-#             kubernetes cluster.local in-addr.arpa ip6.arpa {
-#                pods insecure
-#                fallthrough in-addr.arpa ip6.arpa
-#                ttl 0
-#             }
-#             prometheus :9153
-#             forward . /etc/resolv.conf {
-#                max_concurrent 1000
-#             }
-#             cache 30
-#             loop
-#             reload
-#             loadbalance
-#         }
-# EOF
-
-# Assume these keys already exist
-# TODO generate new keys each time?
-# kubectl create secret tls envoy-tls --cert=$SCRIPT_DIR/tls/tls.crt --key=$SCRIPT_DIR/tls/tls.key
-
-# metrics api
-# kubectl apply -f $SCRIPT_DIR/metrics-server.yaml
-# helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+# Add K8s metrics api so that we can run `kubectl top`. Kinda wish kind has this included by default though.
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
 helm upgrade --install --set args={--kubelet-insecure-tls} metrics-server metrics-server/metrics-server --namespace kube-system
 
 # build pachyderm docker images, load into kind, and deploy pachyderm

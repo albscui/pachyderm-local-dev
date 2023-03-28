@@ -12,7 +12,7 @@ pachd:
     tag: local
   clusterDeploymentID: dev
   logFormat: json
-  enterpriseLicenseKey: "redacted"
+  enterpriseLicenseKey: ""
   rootToken: "fa03ee2e5be041aba4a7b5e4ed3db814"
   activateAuth: true
   localhostIssuer: "true"
@@ -36,7 +36,7 @@ postgresql:
 
 proxy:
   enabled: true
-  host: 172.30.80.1
+  host: "localhost"
   service:
     type: NodePort
   tls:
