@@ -19,7 +19,7 @@ CGO_ENABLED=0 GOOS=linux go build -o worker_init ./etc/worker
 docker build . -f ./Dockerfile.pachd -t pachyderm/pachd:local
 docker build . -f ./Dockerfile.worker -t pachyderm/worker:local
 # load these docker images into kind
-kind load docker-image pachyderm/pachd:local pachyderm/worker:local --name local-pach || true
+kind load docker-image pachyderm/pachd:local pachyderm/worker:local || true
 # don't want to commit these to git
 rm pachctl pachd worker pachtf worker_init
 
@@ -29,10 +29,10 @@ kubectl rollout status deployment pachd
 
 # This pachctl is the version we actually use to run commands interactively
 CGO_ENABLED=0 go install ./src/server/cmd/pachctl
-pachctl config set context kind-local-pach --overwrite <<EOF
+pachctl config set context local --overwrite <<EOF
 {"pachd_address": "grpc://localhost:80", "session_token": "fa03ee2e5be041aba4a7b5e4ed3db814"}
 EOF
-pachctl config set active-context kind-local-pach
+pachctl config set active-context local
 
 until pachctl version &> /dev/null
 do

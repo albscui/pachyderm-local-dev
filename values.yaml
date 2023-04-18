@@ -11,8 +11,10 @@ pachd:
   image:
     tag: local
   clusterDeploymentID: dev
+  logLevel: debug
   logFormat: json
-  enterpriseLicenseKey: ""
+  activateEnterprise: true
+  enterpriseLicenseKey: "=="
   rootToken: "fa03ee2e5be041aba4a7b5e4ed3db814"
   activateAuth: true
   localhostIssuer: "true"
@@ -25,6 +27,13 @@ pachd:
       secret: "minioadmin"
       secure: "false"
       signature: ""
+  pachAuthClusterRoleBindings:
+    allClusterUsers:
+    - projectCreator
+
+pachw:
+  minReplicas: 0
+  maxReplicas: 10
 
 console:
   enabled: true
@@ -41,3 +50,6 @@ proxy:
     type: NodePort
   tls:
     enabled: false
+
+oidc:
+  mockIDP: true

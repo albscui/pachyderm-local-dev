@@ -10,11 +10,11 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 echo $SCRIPT_DIR
 
 # start fresh by deleting existing cluster and clearing docker volumes
-kind delete cluster --name=local-pach
+kind delete cluster
 docker system prune --volumes -f
 
 # create kind cluster with custom port mappings
-cat <<EOF | kind create cluster --name=local-pach --config=-
+cat <<EOF | kind create cluster --config=-
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
