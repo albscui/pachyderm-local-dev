@@ -14,9 +14,9 @@ pachd:
   logLevel: debug
   logFormat: json
   activateEnterprise: true
-  enterpriseLicenseKey: "=="
-  rootToken: "fa03ee2e5be041aba4a7b5e4ed3db814"
+  enterpriseLicenseKey: ""
   activateAuth: true
+  rootToken: "fa03ee2e5be041aba4a7b5e4ed3db814"
   localhostIssuer: "true"
   storage:
     backend: MINIO
@@ -27,9 +27,6 @@ pachd:
       secret: "minioadmin"
       secure: "false"
       signature: ""
-  pachAuthClusterRoleBindings:
-    allClusterUsers:
-    - projectCreator
 
 pachw:
   minReplicas: 0
@@ -44,12 +41,7 @@ postgresql:
     type: NodePort
 
 proxy:
-  enabled: true
-  host: "localhost"
+  host: "host.wsl.albs"
+  # host: "localhost"
   service:
     type: NodePort
-  tls:
-    enabled: false
-
-oidc:
-  mockIDP: true
